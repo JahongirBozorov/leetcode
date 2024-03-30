@@ -1,40 +1,48 @@
-# def countPoints(rings: str) -> int:
-#     set_B = set()
-#     set_G = set()
-#     set_R = set()
-#     for i, each in enumerate(rings):
-#         if each == 'B':
-#             set_B.add(rings[i + 1])
-#         elif each == 'R':
-#             set_R.add(rings[i + 1])
-#         elif each == 'G':
-#             set_G.add(rings[i + 1])
-#         else:
-#             continue
-#     return len(set_B.intersection(set_R.intersection(set_G)))
-#
-# print(countPoints("B0B6G0R6R0R6G9"))
 from typing import List
 
-
-#     2- misol
-
-
-# def firstPalindrome(words: List[str]) -> str:
-#     for i in words:
-#         if i == i[::-1]:
-#             return i
-#     return ""
+# 1-misol
+# def construct2DArray(original: List[int], m: int, n: int) -> List[List[int]]:
+#     if m * n != len(original):
+#         return []
 #
-# print(firstPalindrome(["abc","car","ada","racecar","cool"]))
+#     matrix = [[] for i in range(m)]
+#     curr = 0
+#
+#     for i in range(m):
+#         for j in range(n):
+#             matrix[i].append(original[curr])
+#             curr += 1
+#     return matrix
+#
+#
+# print(construct2DArray([1, 2, 3], 1, 3))
 
 
-#   3- misol
+# 2-misol
 
-def mostWordsFound(sentences: List[str]) -> int:
-    list1 = []
-    for i in sentences:
-        list1.append(len(i.split(" ")))
-    return max(list1)
+# def minimumPerimeter(neededApples: int) -> int:
+#     total = 0
+#     for i in range(neededApples):
+#         total += 12 * (i + 1) * (i + 1)
+#         if total >= neededApples:
+#             return 8 * (i + 1)
+#
+#
+# print(minimumPerimeter(1))
 
-print(mostWordsFound(["alice and bob love leetcode", "i think so too", "this is great thanks very much"]))
+
+
+# 3-misol
+
+def canBeTypedWords(text: str, brokenLetters: str) -> int:
+    l = text.split()
+    c = 0
+    for i in l:
+        for b in brokenLetters:
+            if b in i:
+                c += 1
+                break
+    return len(l) - c
+
+
+print(canBeTypedWords("Hello World", "ad"))
