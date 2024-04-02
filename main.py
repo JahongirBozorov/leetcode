@@ -1,48 +1,54 @@
-from typing import List
-
 # 1-misol
-# def construct2DArray(original: List[int], m: int, n: int) -> List[List[int]]:
-#     if m * n != len(original):
-#         return []
-#
-#     matrix = [[] for i in range(m)]
-#     curr = 0
-#
-#     for i in range(m):
-#         for j in range(n):
-#             matrix[i].append(original[curr])
-#             curr += 1
-#     return matrix
-#
-#
-# print(construct2DArray([1, 2, 3], 1, 3))
+import collections
+from idlelib.tree import TreeNode
+from typing import Optional
+
+
+def isBalanced(root: Optional[TreeNode]) -> bool:
+    if root is None:
+        return True
+
+    def height(root):
+        if not root:
+            return 0
+        return 1 + max(height(root.left), height(root.right))
+
+    left, right = height(root.left), height(root.right)
+    if abs(left - right) <= 1:
+        return True and isBalanced(root.left) and isBalanced(root.right)
+    return False
+
+# bu misolda yechimni leetcode yechildi treeni bu yerda qanday yozishni bilmadim
 
 
 # 2-misol
 
-# def minimumPerimeter(neededApples: int) -> int:
-#     total = 0
-#     for i in range(neededApples):
-#         total += 12 * (i + 1) * (i + 1)
-#         if total >= neededApples:
-#             return 8 * (i + 1)
-#
-#
-# print(minimumPerimeter(1))
+def minDepth(root: Optional[TreeNode]) -> int:
+    if not root:
+        return 0
+    if not root.left and not root.right:
+        return 1
+    left = minDepth(root.left) if root.left else float('inf')
+    right = minDepth(root.right) if root.right else float('inf')
+    return 1 + min(left, right)
 
-
+# 1 va 2 - misolda funksiya chaqirilganda oldiga self. qo'ying leetcodda tekshirayotganda
 
 # 3-misol
 
-def canBeTypedWords(text: str, brokenLetters: str) -> int:
-    l = text.split()
-    c = 0
-    for i in l:
-        for b in brokenLetters:
-            if b in i:
-                c += 1
-                break
-    return len(l) - c
-
-
-print(canBeTypedWords("Hello World", "ad"))
+def hasPathSum(root: Optional[TreeNode], targetSum: int) -> bool:
+    if not root:
+        return False
+    queue = collections.deque([(root, root.val)])
+    while queue:
+        node, val = queue.popleft()
+        if not node.left and not node.right:
+            if val == targetSum:
+                return True
+            else:
+                continue
+        if node.left:
+            queue.append((node.left, val + node.left.val))
+        if node.right:
+            queue.append((node.right, val + node.right.val))
+    return False
